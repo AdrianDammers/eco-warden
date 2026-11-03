@@ -146,6 +146,8 @@ MonoBehaviour:
   mover: {fileID: 3050099}
   player: {fileID: 2118382511}
   fleeDistance: 7
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &3050097
@@ -277,6 +279,8 @@ MonoBehaviour:
   mover: {fileID: 69386731}
   player: {fileID: 2118382511}
   fleeDistance: 5
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &69386733
@@ -592,6 +596,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -666,13 +671,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.097085245, y: -0, z: -0, w: 0.99527615}
-  m_LocalPosition: {x: 0, y: 13.1, z: -63.4}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 11.143, y: 0, z: 0}
+  m_Father: {fileID: 2118382511}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,6 +722,23 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 672f9f79704508f4dbcb078377797bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRifle
+  range: 100
+  fireCooldown: 1
+  rifleOffset: {x: 0.25, y: -0.25, z: 0.5}
+  recoilDistance: 0.08
+  recoilReturnSpeed: 8
 --- !u!1 &384072873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,6 +1714,8 @@ MonoBehaviour:
   mover: {fileID: 1147414604}
   player: {fileID: 2118382511}
   fleeDistance: 7
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &1147414602
@@ -1902,6 +1926,8 @@ MonoBehaviour:
   mover: {fileID: 1323508389}
   player: {fileID: 2118382511}
   fleeDistance: 7
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &1323508387
@@ -2002,6 +2028,8 @@ MonoBehaviour:
   mover: {fileID: 1489279837}
   player: {fileID: 2118382511}
   fleeDistance: 7
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &1489279835
@@ -2344,6 +2372,8 @@ MonoBehaviour:
   mover: {fileID: 1645303930}
   player: {fileID: 2118382511}
   fleeDistance: 5
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &1645303932
@@ -2665,6 +2695,8 @@ MonoBehaviour:
   mover: {fileID: 1855764606}
   player: {fileID: 2118382511}
   fleeDistance: 7
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &1855764604
@@ -2732,6 +2764,8 @@ MonoBehaviour:
   mover: {fileID: 1865823627}
   player: {fileID: 2118382511}
   fleeDistance: 7
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &1865823625
@@ -2852,6 +2886,8 @@ MonoBehaviour:
   mover: {fileID: 1906576183}
   player: {fileID: 2118382511}
   fleeDistance: 5
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &1906576181
@@ -2988,6 +3024,8 @@ MonoBehaviour:
   mover: {fileID: 2015643060}
   player: {fileID: 2118382511}
   fleeDistance: 5
+  safeDistance: 12
+  fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
 --- !u!195 &2015643062
@@ -3038,37 +3076,15 @@ GameObject:
   - component: {fileID: 2118382511}
   - component: {fileID: 2118382510}
   - component: {fileID: 2118382509}
-  - component: {fileID: 2118382508}
+  - component: {fileID: 2118382513}
+  - component: {fileID: 2118382512}
   m_Layer: 0
   m_Name: PlayerDraft
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &2118382508
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118382506}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &2118382509
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3135,12 +3151,56 @@ Transform:
   m_GameObject: {fileID: 2118382506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.70424, y: 0, z: 26.53317}
+  m_LocalPosition: {x: 12.70424, y: 1, z: 26.53317}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2118382512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118382506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ec605d0a3400e4b93dfc38fd60807c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  cameraTransform: {fileID: 0}
+  walkSpeed: 3
+  runSpeed: 6
+  gravity: -9.81
+  mouseSensitivity: 0.1
+  maxLookAngle: 80
+--- !u!143 &2118382513
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118382506}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5000001
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &2136055980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 685195320120420345, guid: 512b72c73a22e904d87662ebca8eb1e1, type: 3}
@@ -3155,7 +3215,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1652842900}

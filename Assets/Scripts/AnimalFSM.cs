@@ -13,7 +13,9 @@ public class AnimalFSM : MonoBehaviour
     public Transform player;
 
     [Header("Parameters")]
-    public float fleeDistance = 7.0f;
+    public float fleeDistance = 7.0f;   // start fleeing when the player is closer than this
+    public float safeDistance = 12.0f;  // stop fleeing when the player is further away than this
+    public float fleeStep = 7.0f;       // how far ahead each flee point is picked
     public float wanderRadius = 10f;
     public float wanderTimer = 5f;
 
@@ -36,8 +38,9 @@ public class AnimalFSM : MonoBehaviour
 
         if (agent != null)
         {
+            // The agent only plans the path. CreatureMover moves and rotates the animal.
             agent.updatePosition = false;
-            agent.updateRotation = true;
+            agent.updateRotation = false;
         }
 
         // Automatically find the player using the "Player" tag
@@ -55,16 +58,17 @@ public class AnimalFSM : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // --- STATE MACHINE LOGIC ---
-        if (distanceToPlayer < fleeDistance)
+        // Two different distances so the animal doesn't flicker between states at the border
+        if (currentState == State.Wander && distanceToPlayer < fleeDistance)
         {
             currentState = State.Flee;
         }
-        else
+        else if (currentState == State.Flee && distanceToPlayer > safeDistance)
         {
             currentState = State.Wander;
+            timer = wanderTimer; // pick a new wander point right away
         }
 
-        Vector3 targetPosition = transform.position;
         bool isRunning = false;
 
         switch (currentState)
@@ -74,48 +78,53 @@ public class AnimalFSM : MonoBehaviour
                 timer += Time.deltaTime;
                 if (timer >= wanderTimer)
                 {
-                    Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
-                    if (agent != null) agent.SetDestination(newPos);
+                    if (TryGetNavPoint(transform.position + Random.insideUnitSphere * wanderRadius, wanderRadius, out Vector3 newPos))
+                    {
+                        if (agent != null) agent.SetDestination(newPos);
+                    }
                     timer = 0;
                 }
-                if (agent != null) targetPosition = agent.steeringTarget;
                 isRunning = false;
                 break;
 
             case State.Flee:
                 if (agent != null) agent.speed = 4.5f;
 
-                // Calculate safe escape direction away from the player
-                Vector3 runDir = player.position - transform.position;
-                if (runDir.sqrMagnitude < 0.01f)
+                // Direction from the player to the animal = away from the player
+                Vector3 awayDir = transform.position - player.position;
+                awayDir.y = 0f;
+                if (awayDir.sqrMagnitude < 0.01f)
                 {
-                    runDir = -transform.forward;
+                    awayDir = transform.forward;
                 }
 
-                Vector3 fleePos = transform.position - runDir.normalized * 7.0f;
+                Vector3 fleePos = transform.position + awayDir.normalized * fleeStep;
 
-                NavMeshHit navHit;
-                NavMesh.SamplePosition(fleePos, out navHit, 7.0f, -1);
-                if (agent != null) agent.SetDestination(navHit.position);
-
-                if (agent != null) targetPosition = agent.steeringTarget;
+                // Only use the point if it is on the NavMesh
+                if (TryGetNavPoint(fleePos, fleeStep, out Vector3 navFleePos))
+                {
+                    if (agent != null) agent.SetDestination(navFleePos);
+                }
                 isRunning = true;
                 break;
         }
 
+        // Keep the agent's internal position in sync with where the animal really is
         if (agent != null)
         {
             agent.nextPosition = transform.position;
         }
 
+        // Next point along the path
+        Vector3 targetPosition = agent != null ? agent.steeringTarget : transform.position;
         Vector3 worldDelta = targetPosition - transform.position;
         worldDelta.y = 0f;
-        Vector3 localDir = transform.InverseTransformDirection(worldDelta.normalized);
-        Vector2 inputAxis = new Vector2(localDir.x, localDir.z);
 
         if (mover != null && worldDelta.magnitude > 0.2f)
         {
-            mover.SetInput(inputAxis, targetPosition, isRunning, false);
+            // CreatureMover reads the axis relative to the target direction,
+            // so "forward" (0, 1) means "move towards the target".
+            mover.SetInput(Vector2.up, targetPosition, isRunning, false);
         }
         else if (mover != null)
         {
@@ -132,12 +141,15 @@ public class AnimalFSM : MonoBehaviour
         }
     }
 
-    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    // Finds the closest point on the NavMesh. Returns false if none was found.
+    bool TryGetNavPoint(Vector3 position, float searchRadius, out Vector3 result)
     {
-        Vector3 randDirection = Random.insideUnitSphere * dist;
-        randDirection += origin;
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
-        return navHit.position;
+        if (NavMesh.SamplePosition(position, out NavMeshHit navHit, searchRadius, NavMesh.AllAreas))
+        {
+            result = navHit.position;
+            return true;
+        }
+        result = transform.position;
+        return false;
     }
 }

@@ -144,9 +144,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 3050097}
   mover: {fileID: 3050099}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 7
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -183,6 +184,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2f4aa750c530144bd7219a00354c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3050103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3050094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!1001 &69386729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,6 +262,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 69386732}
+    - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 69386741}
   m_SourcePrefab: {fileID: 100100000, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
 --- !u!1 &69386730 stripped
 GameObject:
@@ -277,9 +297,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 69386733}
   mover: {fileID: 69386731}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 5
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -310,6 +331,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7922649801668778606, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
   m_PrefabInstance: {fileID: 69386729}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &69386741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69386730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!4 &73197543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 644960786271204023, guid: 66072c42e7f38924f90a2ea3e36cc606, type: 3}
@@ -583,6 +620,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1855764603}
+    - targetCorrespondingSourceObject: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1855764613}
   m_SourcePrefab: {fileID: 100100000, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
 --- !u!1 &330585543
 GameObject:
@@ -1260,6 +1300,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1323508386}
+    - targetCorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1323508393}
   m_SourcePrefab: {fileID: 100100000, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
 --- !u!1001 &648221153
 PrefabInstance:
@@ -1323,6 +1366,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3050096}
+    - targetCorrespondingSourceObject: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3050103}
   m_SourcePrefab: {fileID: 100100000, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
 --- !u!1001 &708856856
 PrefabInstance:
@@ -1443,6 +1489,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1489279834}
+    - targetCorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1489279841}
   m_SourcePrefab: {fileID: 100100000, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
 --- !u!1 &832575517
 GameObject:
@@ -1686,6 +1735,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1865823624}
+    - targetCorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1865823631}
   m_SourcePrefab: {fileID: 100100000, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
 --- !u!1 &1147414599 stripped
 GameObject:
@@ -1712,9 +1764,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 1147414602}
   mover: {fileID: 1147414604}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 7
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -1751,6 +1804,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2f4aa750c530144bd7219a00354c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1147414608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147414599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!1001 &1157287534
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1924,9 +1993,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 1323508387}
   mover: {fileID: 1323508389}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 7
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -1963,6 +2033,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2f4aa750c530144bd7219a00354c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1323508393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323508384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!4 &1330237247 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3805318389859771188, guid: 24457fdf8e66c3c49b7599931e0fdcb2, type: 3}
@@ -2026,9 +2112,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 1489279835}
   mover: {fileID: 1489279837}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 7
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -2065,6 +2152,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2f4aa750c530144bd7219a00354c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1489279841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489279832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!1001 &1496833182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2127,6 +2230,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1147414601}
+    - targetCorrespondingSourceObject: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1147414608}
   m_SourcePrefab: {fileID: 100100000, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
 --- !u!1001 &1508432437
 PrefabInstance:
@@ -2338,6 +2444,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1645303931}
+    - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1645303940}
   m_SourcePrefab: {fileID: 100100000, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
 --- !u!1 &1645303929 stripped
 GameObject:
@@ -2370,9 +2479,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 1645303932}
   mover: {fileID: 1645303930}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 5
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -2403,6 +2513,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7922649801668778606, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
   m_PrefabInstance: {fileID: 1645303928}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1645303940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645303929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!1 &1652842896
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,9 +2819,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 1855764604}
   mover: {fileID: 1855764606}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 7
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -2737,6 +2864,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4483999970917742656, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
   m_PrefabInstance: {fileID: 322427744}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1855764613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855764602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!1 &1865823622 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
@@ -2762,9 +2905,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 1865823625}
   mover: {fileID: 1865823627}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 7
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -2801,6 +2945,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2f4aa750c530144bd7219a00354c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1865823631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865823622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!1001 &1906576178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2863,6 +3023,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1906576180}
+    - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1906576191}
   m_SourcePrefab: {fileID: 100100000, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
 --- !u!1 &1906576179 stripped
 GameObject:
@@ -2884,9 +3047,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 1906576181}
   mover: {fileID: 1906576183}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 5
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -2928,6 +3092,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7922649801668778606, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
   m_PrefabInstance: {fileID: 1906576178}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1906576191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906576179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!1001 &2015643058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2990,6 +3170,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2015643061}
+    - targetCorrespondingSourceObject: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015643070}
   m_SourcePrefab: {fileID: 100100000, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
 --- !u!1 &2015643059 stripped
 GameObject:
@@ -3022,9 +3205,10 @@ MonoBehaviour:
   currentState: 0
   agent: {fileID: 2015643062}
   mover: {fileID: 2015643060}
+  perception: {fileID: 0}
   player: {fileID: 2118382511}
-  fleeDistance: 5
   safeDistance: 12
+  minFleeTime: 4
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
@@ -3055,6 +3239,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7922649801668778606, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
   m_PrefabInstance: {fileID: 2015643058}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015643070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015643059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09211b674fef9a24c98b8c781ddb28f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalPerception
+  viewDistance: 10
+  viewAngle: 120
+  eyeHeight: 0.8
+  hearingRadius: 25
 --- !u!4 &2077851176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2685705423253822111, guid: d3ee913ed32937344b0587e70dc777a2, type: 3}

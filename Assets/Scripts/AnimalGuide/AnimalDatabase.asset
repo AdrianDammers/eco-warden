@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a593f77b54749b5936037e74536ef3, type: 3}
+  m_Name: AnimalDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::AnimalDatabase
+  animals:
+  - {fileID: 11400000, guid: 54571ae89b74a428d8cd6f48ec2ba53a, type: 2}
+  - {fileID: 11400000, guid: aa77ff03bfeaf46388da68b6703fbead, type: 2}
+  - {fileID: 11400000, guid: 04fd1decfc5c7411691fb0bfa5185cb0, type: 2}
+  - {fileID: 11400000, guid: 8a1b34f65a5754e6eace6cbe3aaedee4, type: 2}

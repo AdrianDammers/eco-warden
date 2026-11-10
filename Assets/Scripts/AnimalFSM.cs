@@ -10,16 +10,18 @@ public class AnimalFSM : MonoBehaviour
     [Header("References")]
     public NavMeshAgent agent;
     public CreatureMover mover;
+    public AnimalPerception perception;
     public Transform player;
 
     [Header("Parameters")]
-    public float fleeDistance = 7.0f;   // start fleeing when the player is closer than this
-    public float safeDistance = 12.0f;  // stop fleeing when the player is further away than this
+    public float safeDistance = 15.0f;  // stop fleeing when the player is further away than this...
+    public float minFleeTime = 4.0f;    // ...and the animal has fled for at least this long
     public float fleeStep = 7.0f;       // how far ahead each flee point is picked
     public float wanderRadius = 10f;
     public float wanderTimer = 5f;
 
     private float timer;
+    private float fleeTimer;
 
     void Start()
     {
@@ -33,6 +35,7 @@ public class AnimalFSM : MonoBehaviour
         // Automatically assign components if left empty in the inspector
         if (agent == null) agent = GetComponent<NavMeshAgent>();
         if (mover == null) mover = GetComponent<CreatureMover>();
+        if (perception == null) perception = GetComponent<AnimalPerception>();
 
         timer = wanderTimer;
 
@@ -57,16 +60,26 @@ public class AnimalFSM : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // --- STATE MACHINE LOGIC ---
-        // Two different distances so the animal doesn't flicker between states at the border
-        if (currentState == State.Wander && distanceToPlayer < fleeDistance)
+        // --- SENSE: ask the perception script ---
+        // (single | so HeardShot() is always called and resets, even when the player is seen)
+        bool noticedPlayer = perception != null && (perception.CanSeePlayer() | perception.HeardShot());
+
+        // --- THINK: state machine logic ---
+        if (noticedPlayer)
         {
+            // Seeing or hearing the player always (re)starts the flight
             currentState = State.Flee;
+            fleeTimer = 0f;
         }
-        else if (currentState == State.Flee && distanceToPlayer > safeDistance)
+        else if (currentState == State.Flee)
         {
-            currentState = State.Wander;
-            timer = wanderTimer; // pick a new wander point right away
+            fleeTimer += Time.deltaTime;
+            // Calm down only when far enough away AND after fleeing for a while
+            if (distanceToPlayer > safeDistance && fleeTimer > minFleeTime)
+            {
+                currentState = State.Wander;
+                timer = wanderTimer; // pick a new wander point right away
+            }
         }
 
         bool isRunning = false;

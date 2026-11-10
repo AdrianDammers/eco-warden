@@ -81,3 +81,4 @@ public class AnimalPerception : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, hearingRadius);
     }
 }
+

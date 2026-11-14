@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // SENSE: what the animal can see and hear.
-// The FSM asks this script if the animal has noticed the player.
+// The FSM asks this script if the animal has noticed the player..
 public class AnimalPerception : MonoBehaviour
 {
     [Header("Vision")]

@@ -57,6 +57,13 @@ public class PlayerRifle : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
             Debug.Log("Hit: " + hit.collider.name);
+
+            // Did we hit an animal? (GetComponentInParent also works if we hit a child part of it)
+            Animal animal = hit.collider.GetComponentInParent<Animal>();
+            if (animal != null)
+            {
+                animal.Hit();
+            }
         }
         else
         {

@@ -151,6 +151,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &3050097
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -213,6 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: 8a1b34f65a5754e6eace6cbe3aaedee4, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1 &13173762
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,6 +581,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &69386733
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -630,6 +642,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: aa77ff03bfeaf46388da68b6703fbead, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!4 &73197543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 644960786271204023, guid: 66072c42e7f38924f90a2ea3e36cc606, type: 3}
@@ -1459,6 +1473,7 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
+  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1601,6 +1616,19 @@ MonoBehaviour:
   rifleOffset: {x: 0.25, y: -0.25, z: 0.5}
   recoilDistance: 0.08
   recoilReturnSpeed: 8
+--- !u!114 &330585549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfdf41422688c70418af8920de56d357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTreat
+  treatDistance: 3
 --- !u!1 &384072873
 GameObject:
   m_ObjectHideFlags: 0
@@ -3871,6 +3899,7 @@ MonoBehaviour:
   protectedPenalty: -20
   nativePenalty: -10
   domesticPenalty: -10
+  treatBonus: 15
 --- !u!4 &1145448687
 Transform:
   m_ObjectHideFlags: 0
@@ -3918,6 +3947,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &1147414602
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3980,6 +4014,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: 8a1b34f65a5754e6eace6cbe3aaedee4, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1001 &1157287534
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4420,6 +4456,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &1323508387
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4482,6 +4523,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: 04fd1decfc5c7411691fb0bfa5185cb0, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!4 &1330237247 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3805318389859771188, guid: 24457fdf8e66c3c49b7599931e0fdcb2, type: 3}
@@ -4841,6 +4884,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &1489279835
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4903,6 +4951,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: 04fd1decfc5c7411691fb0bfa5185cb0, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1001 &1496833182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5640,6 +5690,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &1645303932
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5696,6 +5751,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: aa77ff03bfeaf46388da68b6703fbead, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1 &1652842896
 GameObject:
   m_ObjectHideFlags: 0
@@ -6130,6 +6187,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &1855764604
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6197,6 +6259,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: 8a1b34f65a5754e6eace6cbe3aaedee4, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1 &1865823622 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
@@ -6229,6 +6293,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &1865823625
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6291,6 +6360,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: 04fd1decfc5c7411691fb0bfa5185cb0, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1 &1879951186
 GameObject:
   m_ObjectHideFlags: 0
@@ -6647,6 +6718,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &1906576181
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6714,6 +6790,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: aa77ff03bfeaf46388da68b6703fbead, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1 &1964412627
 GameObject:
   m_ObjectHideFlags: 0
@@ -6958,6 +7036,11 @@ MonoBehaviour:
   fleeStep: 7
   wanderRadius: 10
   wanderTimer: 5
+  startsSick: 0
+  sickChance: 0.2
+  sickWanderRadius: 2
+  sickWanderTimer: 8
+  markerHeight: 2.2
 --- !u!195 &2015643062
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -7014,6 +7097,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animal
   species: {fileID: 11400000, guid: aa77ff03bfeaf46388da68b6703fbead, type: 2}
+  fallDuration: 0.6
+  lieDownHeight: 0.2
 --- !u!1 &2022402111
 GameObject:
   m_ObjectHideFlags: 0

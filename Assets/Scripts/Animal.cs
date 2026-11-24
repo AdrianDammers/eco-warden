@@ -10,6 +10,8 @@ public class Animal : MonoBehaviour
 {
     // Other scripts (e.g. ScoreManager) listen to this: called with the species that was shot
     public static event Action<AnimalData> OnAnimalShot;
+    // Called with the species when a sick animal is treated by the player
+    public static event Action<AnimalData> OnAnimalTreated;
 
     [Tooltip("Drag the species asset here, e.g. Deer or Horse from Scripts/AnimalGuide")]
     public AnimalData species;
@@ -31,6 +33,19 @@ public class Animal : MonoBehaviour
 
         OnAnimalShot?.Invoke(species);
         Die();
+    }
+
+    // Called by PlayerTreat. Returns true if the animal was sick and is now cured.
+    public bool Treat()
+    {
+        if (IsDead) return false;
+
+        AnimalFSM fsm = GetComponent<AnimalFSM>();
+        if (fsm == null || !fsm.IsSick) return false;
+
+        fsm.Cure();
+        OnAnimalTreated?.Invoke(species);
+        return true;
     }
 
     void Die()

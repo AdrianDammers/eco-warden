@@ -4,7 +4,7 @@ using ithappy.Animals_FREE;
 
 public class AnimalFSM : MonoBehaviour
 {
-    public enum State { Wander, Flee }
+    public enum State { Wander, Flee, Sick }
     public State currentState = State.Wander;
 
     [Header("References")]
@@ -20,8 +20,18 @@ public class AnimalFSM : MonoBehaviour
     public float wanderRadius = 10f;
     public float wanderTimer = 5f;
 
+    [Header("Sick")]
+    public bool startsSick = false;                 // tick to make this animal sick from the start
+    [Range(0f, 1f)] public float sickChance = 0f;   // or a random chance to start sick (0.2 = 20 %)
+    public float sickWanderRadius = 2f;             // sick animals only take short steps...
+    public float sickWanderTimer = 8f;              // ...and rarely
+    public float markerHeight = 2.2f;               // height of the red cross above the animal
+
+    public bool IsSick => currentState == State.Sick;
+
     private float timer;
     private float fleeTimer;
+    private GameObject sickMarker;
 
     void Start()
     {
@@ -48,6 +58,55 @@ public class AnimalFSM : MonoBehaviour
 
         // Automatically find the player using the "Player" tag
         FindPlayer();
+
+        if (startsSick || Random.value < sickChance)
+        {
+            BecomeSick();
+        }
+    }
+
+    // ---------- SICK STATE ----------
+    public void BecomeSick()
+    {
+        currentState = State.Sick;
+        timer = sickWanderTimer;
+        if (sickMarker == null) sickMarker = BuildSickMarker();
+    }
+
+    // Called when the player treats the animal
+    public void Cure()
+    {
+        if (!IsSick) return;
+        currentState = State.Wander;
+        timer = wanderTimer;
+        if (sickMarker != null) Destroy(sickMarker);
+    }
+
+    // Remove the cross if the animal dies (Animal.cs disables this script)
+    void OnDisable()
+    {
+        if (sickMarker != null) Destroy(sickMarker);
+    }
+
+    // A red cross floating above the animal, built from two cubes
+    GameObject BuildSickMarker()
+    {
+        GameObject marker = new GameObject("SickMarker");
+        marker.transform.SetParent(transform, false);
+        marker.transform.localPosition = Vector3.up * markerHeight;
+
+        Material red = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        red.color = new Color(0.85f, 0.1f, 0.1f);
+
+        foreach (Vector3 size in new[] { new Vector3(0.5f, 0.15f, 0.15f), new Vector3(0.15f, 0.5f, 0.15f) })
+        {
+            GameObject bar = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Destroy(bar.GetComponent<Collider>()); // shots and the treat ray should hit the animal, not the cross
+            bar.transform.SetParent(marker.transform, false);
+            bar.transform.localScale = size;
+            bar.GetComponent<Renderer>().sharedMaterial = red;
+        }
+        return marker;
     }
 
     void Update()
@@ -65,7 +124,11 @@ public class AnimalFSM : MonoBehaviour
         bool noticedPlayer = perception != null && (perception.CanSeePlayer() | perception.HeardShot());
 
         // --- THINK: state machine logic ---
-        if (noticedPlayer)
+        if (currentState == State.Sick)
+        {
+            // Sick animals are too weak to flee: they stay in the Sick state until treated
+        }
+        else if (noticedPlayer)
         {
             // Seeing or hearing the player always (re)starts the flight
             currentState = State.Flee;
@@ -119,6 +182,20 @@ public class AnimalFSM : MonoBehaviour
                     if (agent != null) agent.SetDestination(navFleePos);
                 }
                 isRunning = true;
+                break;
+
+            case State.Sick:
+                // Mostly stands still, now and then takes a short, slow step
+                timer += Time.deltaTime;
+                if (timer >= sickWanderTimer)
+                {
+                    if (TryGetNavPoint(transform.position + Random.insideUnitSphere * sickWanderRadius, sickWanderRadius, out Vector3 sickPos))
+                    {
+                        if (agent != null) agent.SetDestination(sickPos);
+                    }
+                    timer = 0;
+                }
+                isRunning = false;
                 break;
         }
 

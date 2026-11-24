@@ -14,11 +14,29 @@ public class ScoreManager : MonoBehaviour
     public int protectedPenalty = -20;  // endangered, worst mistake
     public int nativePenalty = -10;     // native wildlife, not allowed
     public int domesticPenalty = -10;   // farm animals, not allowed
+    public int treatBonus = 15;         // treating a sick animal
 
     public int Score { get; private set; }
 
-    void OnEnable()  { Animal.OnAnimalShot += HandleAnimalShot; }
-    void OnDisable() { Animal.OnAnimalShot -= HandleAnimalShot; }
+    void OnEnable()
+    {
+        Animal.OnAnimalShot += HandleAnimalShot;
+        Animal.OnAnimalTreated += HandleAnimalTreated;
+    }
+
+    void OnDisable()
+    {
+        Animal.OnAnimalShot -= HandleAnimalShot;
+        Animal.OnAnimalTreated -= HandleAnimalTreated;
+    }
+
+    void HandleAnimalTreated(AnimalData species)
+    {
+        Score += treatBonus;
+        string animalName = species != null ? species.speciesName : "animal";
+        Debug.Log($"Treated a sick {animalName}: +{treatBonus}. Score: {Score}");
+        OnScoreChanged?.Invoke(Score);
+    }
 
     void HandleAnimalShot(AnimalData species)
     {
